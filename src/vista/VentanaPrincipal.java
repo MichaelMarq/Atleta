@@ -1,6 +1,9 @@
 
 package vista;
 
+import javax.swing.JOptionPane;
+import modelo.Atleta;
+
 
 public class VentanaPrincipal extends javax.swing.JFrame {
 
@@ -74,6 +77,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnGuardarAtleta.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         btnGuardarAtleta.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardarAtleta.setText("Registrar Atleta");
+        btnGuardarAtleta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarAtletaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
@@ -168,6 +176,44 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_salirActionPerformed
 
+    private void btnGuardarAtletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarAtletaActionPerformed
+        String nombre;
+        int edad, estatura;
+        double peso;
+        
+        try{
+            nombre = txtNombre.getText();
+            edad= Integer.parseInt(txtEdad.getText());
+            peso = Double.parseDouble(txtPeso.getText());
+            estatura = Integer.parseInt(txtEstatura.getText());
+            
+            Atleta atleta = new Atleta(nombre, edad, peso, estatura);
+            
+            escribirBinario(atleta);
+            JOptionPane.showMessageDialog(null, "Atleta guardado con exito");
+            
+            restablecerCampos();
+            
+        }catch(NumberFormatException d){
+            JOptionPane.showMessageDialog(null, "Dato ingresado incorrecto", "alert", JOptionPane.WARNING_MESSAGE);
+            
+        }
+
+        
+    }//GEN-LAST:event_btnGuardarAtletaActionPerformed
+
+    private void restablecerCampos(){
+        txtNombre.setText("");
+        txtEdad.setText("");
+        txtPeso.setText("");
+        txtEstatura.setText("");      
+    }
+    
+    private void escribirBinario(Atleta atleta){
+        
+    }
+    
+    
 
     public static void main(String args[]) {
 
