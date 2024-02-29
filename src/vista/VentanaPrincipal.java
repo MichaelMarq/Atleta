@@ -1,7 +1,11 @@
 
 package vista;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import javax.swing.JOptionPane;
+import modelo.AgregarBinario;
 import modelo.Atleta;
 
 
@@ -141,6 +145,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         mostrarAtletas.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         mostrarAtletas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/run.png"))); // NOI18N
         mostrarAtletas.setText("Mostrar atletas registrados");
+        mostrarAtletas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostrarAtletasActionPerformed(evt);
+            }
+        });
         menu.add(mostrarAtletas);
         menu.add(jSeparator1);
 
@@ -202,6 +211,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnGuardarAtletaActionPerformed
 
+    private void mostrarAtletasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarAtletasActionPerformed
+        VentanaAtletasRegistrados atleta = new VentanaAtletasRegistrados(this, true);
+        atleta.setVisible(true);
+    }//GEN-LAST:event_mostrarAtletasActionPerformed
+
     private void restablecerCampos(){
         txtNombre.setText("");
         txtEdad.setText("");
@@ -209,8 +223,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtEstatura.setText("");      
     }
     
-    private void escribirBinario(Atleta atleta){
-        
+    private void escribirBinario(Atleta atleta) {
+        try {
+            FileOutputStream archivo = new FileOutputStream("registroAtletas.bin", true);
+            AgregarBinario escribir = new AgregarBinario(archivo);
+            
+            escribir.writeObject(atleta);
+            escribir.close();
+    
+        } catch (FileNotFoundException ex) {
+            System.err.println("Error, "+ex);
+        } catch (IOException ex) {
+            System.err.println("Error, "+ex);
+        }
     }
     
     
